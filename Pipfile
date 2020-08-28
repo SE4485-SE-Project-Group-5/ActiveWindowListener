@@ -1,0 +1,19 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+flask = "*"
+py2app = "*"
+flask-sockets = "*"
+flask-cors = "*"
+pynput = "*"
+pyqt5 = "*"
+pyqtwebkit = "*"
+pyqtwebengine = "*"
+
+[requires]
+python_version = "3.7"
