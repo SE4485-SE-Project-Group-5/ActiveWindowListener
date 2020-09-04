@@ -7,7 +7,7 @@ apis/input_methods/icons
 __pycache__/
 bin/
 out/
-.idea/
+#.idea/
 .vscode/
 static/icons/
 
