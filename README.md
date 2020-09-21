@@ -92,6 +92,6 @@ I now understand for the most part how this app is structured (thanks to hours o
 - [x] Add poetry for Python dependency management (specify platform-specific dependencies)
 - [x] Replace npm with yarn in `react-ui`
 - [x] Remove old unused code (things like mac/linux support)
-- [ ] Use invoke for cleaning and building (remove need for hacky `create_windows_exe.sh` "shell" script)
+- [x] Use invoke for cleaning and building (remove need for hacky `create_windows_exe.sh` "shell" script)
 - [ ] Package pyinstaller output along with MongoDB and Graphviz in a `.msi`
 - [ ] Automate `.msi` build using GitHub workflow
