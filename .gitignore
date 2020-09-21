@@ -10,6 +10,7 @@ out/
 .idea/
 .vscode/
 static/icons/
+static/business_process_diagram*
 
 # Mongo folder
 mongo/mongo.server.log
