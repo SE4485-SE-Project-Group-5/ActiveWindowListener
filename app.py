@@ -68,8 +68,6 @@ def run_app(url, port):
     find_and_save_all_icons("static/icons")
     shutil.copy("default.png", "static/icons")
 
-    if "darwin" in OS:
-        kill_port(port)
     server = pywsgi.WSGIServer(
         (url, port), app, handler_class=WebSocketHandler)
     server.serve_forever()
