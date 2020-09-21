@@ -1,6 +1,6 @@
 cd react-ui
 echo 'Building React App...'
-npm run build
+yarn build
 if [ $? -ne 0 ]; then
   echo "npm build in react-ui failed"
   exit 1
@@ -18,6 +18,10 @@ cp apis/mongo/mongoServer.config static/
 cp default.png static/
 echo 'Building exe...'
 # --add-data 'icons/*.png;static/icons'
-pyinstaller  -w -F --noupx --hidden-import='pkg_resources.py2_warn' --hidden-import='pynput' --add-data "templates;templates" --add-data "static;static" -y flair.py
+poetry run pyinstaller -w -F --noupx --hidden-import='pkg_resources.py2_warn' --hidden-import='pynput' --add-data "templates;templates" --add-data "static;static" -y flair.py
+if [ $? -ne 0 ]; then
+  echo "pyinstaller build failed"
+  exit 1
+fi
 echo "Flair.exe created. Navigate to dist/ and double click flair.exe or run ./flair.exe in git-bash to launch the application. May take a couple seconds to launch"
 rm -rf *.spec

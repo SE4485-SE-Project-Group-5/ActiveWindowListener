@@ -22,3 +22,6 @@ bpd.pdf
 
 react-ui/public/icons/
 .DS_Store
+
+# Flair
+flair/
