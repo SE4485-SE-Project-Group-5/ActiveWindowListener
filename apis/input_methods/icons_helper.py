@@ -26,7 +26,7 @@ def save_icon(icon_path, save_path):
 
         hdc = win32ui.CreateDCFromHandle(win32gui.GetDC(0))
         hbmp = win32ui.CreateBitmap()
-        hbmp.CreateCompatibleBitmap(hdc, iconX, iconX)
+        hbmp.CreateCompatibleBitmap(hdc, iconX, iconY)
         hdc = hdc.CreateCompatibleDC()
 
         hdc.SelectObject(hbmp)
@@ -46,9 +46,7 @@ def save_icon(icon_path, save_path):
         if extrema[1] < 250:
             img.save(save_path)
         return True
-    except Exception as e:
-        # print("Error:")
-        # print(e)
+    except Exception:
         return False
 
 
@@ -74,13 +72,9 @@ def find_and_save_all_icons(file_path='icons'):
 def find_icon_from_path(path, icons_folder=""):
     path = str(hashlib.md5(path.encode()).hexdigest())
     operating_system = str(platform.system()).lower()
-    if getattr(sys, 'frozen', False):
-        if "window" in operating_system:
-            static_folder = os.path.join(sys._MEIPASS, 'static', 'icons')
-            icons_folder = static_folder
-    else:
-        # os.path.join(pathlib.Path(__file__).parent.absolute(), 'icons')
-        icons_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'static', 'icons'))
+
+    # os.path.join(pathlib.Path(__file__).parent.absolute(), 'icons')
+    icons_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'static', 'icons'))
     for file in os.listdir(icons_folder):
         if file == path + ".png":
             return file

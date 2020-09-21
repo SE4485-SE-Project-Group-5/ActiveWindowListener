@@ -17,28 +17,9 @@ from flask_blueprints.example_bp import example_bp, example_ws
 from flask_blueprints.webview_bp import webview_bp
 
 OS = str(platform.system()).lower()
-FROZEN = getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS')
-if FROZEN:
-    MEIPASS = sys._MEIPASS  # pylint: disable=no-member
 SIGKILL = 9
 
-if FROZEN:
-    if "window" in OS:
-        # Logic used for packaging app with PyInstaller
-        template_folder = os.path.join(MEIPASS, 'templates')
-        static_folder = os.path.join(MEIPASS, 'static')
-        app = Flask(__name__, template_folder=template_folder,
-                    static_folder=static_folder)
-    elif "darwin" in OS:
-        # Logic used for packaging app with py2app
-        cwd = os.getcwd()
-        app = Flask(__name__, static_folder=str(cwd) + "/static",
-                    template_folder=str(cwd) + "/templates")
-    else:
-        print("Operating system not supported, please try on Mac OS or Windows")
-        sys.exit(1)
-else:
-    app = Flask(__name__, static_folder="static", template_folder="templates")
+app = Flask(__name__, static_folder="static", template_folder="templates")
 
 CORS(app)
 
@@ -84,17 +65,8 @@ def kill_port(port):
 
 
 def run_app(url, port):
-    if FROZEN:
-        if "window" in OS:
-            icons_dir = os.path.join(MEIPASS, 'static', 'icons')
-            default_icon = os.path.join(MEIPASS, 'static', 'default.png')
-            shutil.rmtree(icons_dir, ignore_errors=True)
-            find_and_save_all_icons(icons_dir)
-            shutil.copy(default_icon, icons_dir)
-    else:
-        shutil.rmtree("static/icons", ignore_errors=True)
-        find_and_save_all_icons("static/icons")
-        shutil.copy("default.png", "static/icons")
+    find_and_save_all_icons("static/icons")
+    shutil.copy("default.png", "static/icons")
 
     if "darwin" in OS:
         kill_port(port)

@@ -10,15 +10,9 @@ from datetime import timedelta
 def generateDiagram(app_info, user_info):
     directory = None
     homepath = None
-    if getattr(sys, 'frozen', False):
-        operating_system = str(platform.system()).lower()
-        if "window" in operating_system:
-            # Logic used for packaging app with PyInstaller
-            directory = os.path.join(sys._MEIPASS, 'static')
-            homepath = os.path.join(sys._MEIPASS, 'static', 'icons')
-    else:
-        directory = os.path.abspath(os.path.join(os.path.dirname(__file__), 'static'))
-        homepath = os.path.abspath(os.path.join(os.path.dirname(__file__), 'static', 'icons'))
+
+    directory = os.path.abspath(os.path.join(os.path.dirname(__file__), 'static'))
+    homepath = os.path.abspath(os.path.join(os.path.dirname(__file__), 'static', 'icons'))
     g = Digraph('G', filename='business_process_diagram', directory=directory)
     g.attr(rankdir='TB', size='8,5')
     fontname = "Helvetica"
