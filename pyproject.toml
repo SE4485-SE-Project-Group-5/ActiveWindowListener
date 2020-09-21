@@ -21,9 +21,6 @@ pywebview = "^3.3.4"
 pywin32 = { version = "^228", markers = "sys_platform == 'win32'" }
 pythonnet = { version = "^2.5.1", markers = "sys_platform == 'win32'" }
 
-
-
-
 [tool.poetry.dev-dependencies]
 pytest = "^6.0.2"
 autopep8 = "^1.5.4"
@@ -31,8 +28,6 @@ pylint = "^2.6.0"
 rope = "^0.17.0"
 pyclean = "^2.0.0"
 pyinstaller = "^4.0"
-cx_Freeze = "^6.2"
-setuptools = "^50.3.0"
 
 [build-system]
 requires = ["poetry>=0.12"]
