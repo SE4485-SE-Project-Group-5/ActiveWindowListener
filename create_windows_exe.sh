@@ -18,7 +18,7 @@ cp apis/mongo/mongoServer.config static/
 cp default.png static/
 echo 'Building exe...'
 # --add-data 'icons/*.png;static/icons'
-poetry run pyinstaller -w -F --noupx --hidden-import='pkg_resources.py2_warn' --hidden-import='pynput' --add-data "templates;templates" --add-data "static;static" -y flair.py
+poetry run pyinstaller -w --add-data "templates;templates"  --add-data "static;static" -y flair.py
 if [ $? -ne 0 ]; then
   echo "pyinstaller build failed"
   exit 1
