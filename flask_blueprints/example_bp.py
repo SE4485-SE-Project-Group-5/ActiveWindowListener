@@ -68,7 +68,7 @@ def get_data_for_ui():
     :return: a dict of necessary process information
     """
 
-    start = time_from_beginning_of_today(offset=timedelta(hours=4))  # 4:00AM
+    start = time_from_beginning_of_today(offset=timedelta(hours=1))  # 1:00AM # FIXME: App will not show activity unless in these bounds for some reason.
     end = time_from_beginning_of_today(offset=timedelta(hours=24))  # 11:59PM
     # Call analytics between 6am-11:59pm with active/idle/thinking timeouts
     ui_data = react_ui_info(start, end, 5, 15, 60)
@@ -83,7 +83,7 @@ def get_analysis():
     :return: a dict of a process activity schedule
     """
 
-    start = time_from_beginning_of_today(offset=timedelta(hours=4))  # 4:00AM
+    start = time_from_beginning_of_today(offset=timedelta(hours=1))  # 1:00AM # FIXME
     end = time_from_beginning_of_today(offset=timedelta(hours=24))  # 11:59PM
     # Call analytics between 6am-11:59pm with active/idle/thinking timeouts
     return bpt_diagram_info(start, end, 5, 15, 60)
