@@ -12,9 +12,8 @@ out/
 static/icons/
 
 # Mongo folder
-apis/mongo/mongo.server.log
-apis/mongo/db
-apis/input_methods/icons/
+mongo/mongo.server.log
+mongo/db/
 
 # Swimlane BPD Final Files
 bpd
