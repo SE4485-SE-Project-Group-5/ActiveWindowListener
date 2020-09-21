@@ -1,9 +1,8 @@
 import os
 import platform
 import shutil
-import signal
 import sys
-from subprocess import Popen, PIPE
+from subprocess import PIPE, Popen
 from threading import Thread
 
 from flask import Flask, render_template
@@ -14,22 +13,27 @@ from geventwebsocket.handler import WebSocketHandler
 
 from apis.input_methods.icons_helper import find_and_save_all_icons
 from apis.input_methods.mouse_and_keyboard_listener import start_listeners
-from flask_blueprints.example_bp import example_bp
-from flask_blueprints.example_bp import example_ws
+from flask_blueprints.example_bp import example_bp, example_ws
 from flask_blueprints.webview_bp import webview_bp
 
-operating_system = str(platform.system()).lower()
+OS = str(platform.system()).lower()
+FROZEN = getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS')
+if FROZEN:
+    MEIPASS = sys._MEIPASS  # pylint: disable=no-member
+SIGKILL = 9
 
-if getattr(sys, 'frozen', False):
-    if "window" in operating_system:
+if FROZEN:
+    if "window" in OS:
         # Logic used for packaging app with PyInstaller
-        template_folder = os.path.join(sys._MEIPASS, 'templates')
-        static_folder = os.path.join(sys._MEIPASS, 'static')
-        app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
-    elif "darwin" in operating_system:
+        template_folder = os.path.join(MEIPASS, 'templates')
+        static_folder = os.path.join(MEIPASS, 'static')
+        app = Flask(__name__, template_folder=template_folder,
+                    static_folder=static_folder)
+    elif "darwin" in OS:
         # Logic used for packaging app with py2app
         cwd = os.getcwd()
-        app = Flask(__name__, static_folder=str(cwd) + "/static", template_folder=str(cwd) + "/templates")
+        app = Flask(__name__, static_folder=str(cwd) + "/static",
+                    template_folder=str(cwd) + "/templates")
     else:
         print("Operating system not supported, please try on Mac OS or Windows")
         sys.exit(1)
@@ -68,32 +72,34 @@ def home():
 
 
 def kill_port(port):
-    process = Popen(["lsof", "-i", ":{0}".format(port)], stdout=PIPE, stderr=PIPE)
-    stdout, stderr = process.communicate()
+    process = Popen(
+        ["lsof", "-i", ":{0}".format(port)], stdout=PIPE, stderr=PIPE)
+    stdout, _ = process.communicate()
     for process in str(stdout.decode("utf-8")).split("\n")[1:]:
         data = [x for x in process.split(" ") if x != '']
         if len(data) <= 1:
             continue
 
-        os.kill(int(data[1]), signal.SIGKILL)
+        os.kill(int(data[1]), SIGKILL)
 
 
 def run_app(url, port):
-    if getattr(sys, 'frozen', False):
-        if "window" in operating_system:
-            static_folder_inner = os.path.join(sys._MEIPASS, 'static', 'icons')
-            static_folder_outter = os.path.join(sys._MEIPASS, 'static', 'default.png')
-            shutil.rmtree(static_folder_inner, ignore_errors=True)
-            find_and_save_all_icons(static_folder_inner)
-            shutil.copy(static_folder_outter, static_folder_inner)
+    if FROZEN:
+        if "window" in OS:
+            icons_dir = os.path.join(MEIPASS, 'static', 'icons')
+            default_icon = os.path.join(MEIPASS, 'static', 'default.png')
+            shutil.rmtree(icons_dir, ignore_errors=True)
+            find_and_save_all_icons(icons_dir)
+            shutil.copy(default_icon, icons_dir)
     else:
         shutil.rmtree("static/icons", ignore_errors=True)
         find_and_save_all_icons("static/icons")
         shutil.copy("default.png", "static/icons")
 
-    if "darwin" in operating_system:
+    if "darwin" in OS:
         kill_port(port)
-    server = pywsgi.WSGIServer((url, port), app, handler_class=WebSocketHandler)
+    server = pywsgi.WSGIServer(
+        (url, port), app, handler_class=WebSocketHandler)
     server.serve_forever()
     # app.run(host=url, port=port, threaded=True)
 
