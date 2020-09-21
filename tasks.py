@@ -10,6 +10,11 @@ def clean(c):
 
 
 @task
+def start(c):
+    c.run("python flair.py")
+
+
+@task
 def build(c):
     # Build React app
     with c.cd("react-ui"):

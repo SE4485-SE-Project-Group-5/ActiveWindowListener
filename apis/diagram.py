@@ -11,8 +11,8 @@ def generateDiagram(app_info, user_info):
     directory = None
     homepath = None
 
-    directory = os.path.abspath(os.path.join(os.path.dirname(__file__), 'static'))
-    homepath = os.path.abspath(os.path.join(os.path.dirname(__file__), 'static', 'icons'))
+    directory = os.path.abspath(os.path.join(os.getcwd(), 'static'))
+    homepath = os.path.abspath(os.path.join(os.getcwd(), 'static', 'icons'))
     g = Digraph('G', filename='business_process_diagram', directory=directory)
     g.attr(rankdir='TB', size='8,5')
     fontname = "Helvetica"

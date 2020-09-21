@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, date, time
 import pytz
 from flask import Blueprint
 
-from diagram import generateDiagram
+from apis.diagram import generateDiagram
 from apis.mongo.mongo_analytics import bpt_diagram_info, react_ui_info
 from apis.monitoring_details.user_network_details import get_user_details
 
