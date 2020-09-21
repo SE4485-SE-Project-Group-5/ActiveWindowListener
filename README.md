@@ -91,10 +91,7 @@ I now understand for the most part how this app is structured (thanks to hours o
 
 - [x] Add poetry for Python dependency management (specify platform-specific dependencies)
 - [x] Replace npm with yarn in `react-ui`
-- [ ] Clean up old code (an ongoing process, old code is extremely chaotic and messy with no documentation)
-  - [ ] Localize UI code in `react-ui` -- currently everywhere with some duplicates (e.g. `default.png` and `static` folder)
-  - [ ] Remove old unused code (things like mac/linux support)
-  - [ ] Use poetry scripts for cleaning and building (remove need for hacky `create_windows_exe.sh` "shell" script)
-- [ ] Write out installation process
-- [ ] Convert pyinstaller build process to cx_Freeze `.msi` build process
+- [x] Remove old unused code (things like mac/linux support)
+- [ ] Use invoke for cleaning and building (remove need for hacky `create_windows_exe.sh` "shell" script)
+- [ ] Package pyinstaller output along with MongoDB and Graphviz in a `.msi`
 - [ ] Automate `.msi` build using GitHub workflow
