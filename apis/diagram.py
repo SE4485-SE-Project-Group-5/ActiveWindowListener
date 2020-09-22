@@ -2,23 +2,19 @@ import datetime
 import os
 import platform
 import sys
+from datetime import timedelta
 
 from graphviz import Digraph
-from datetime import timedelta
+
+from config import BUNDLE_DIR
 
 
 def generateDiagram(app_info, user_info):
     directory = None
     homepath = None
-    if getattr(sys, 'frozen', False):
-        operating_system = str(platform.system()).lower()
-        if "window" in operating_system:
-            # Logic used for packaging app with PyInstaller
-            directory = os.path.join(sys._MEIPASS, 'static')
-            homepath = os.path.join(sys._MEIPASS, 'static', 'icons')
-    else:
-        directory = os.path.abspath(os.path.join(os.path.dirname(__file__), 'static'))
-        homepath = os.path.abspath(os.path.join(os.path.dirname(__file__), 'static', 'icons'))
+
+    directory = os.path.abspath(os.path.join(BUNDLE_DIR, 'static'))
+    homepath = os.path.abspath(os.path.join(BUNDLE_DIR, 'static', 'icons'))
     g = Digraph('G', filename='business_process_diagram', directory=directory)
     g.attr(rankdir='TB', size='8,5')
     fontname = "Helvetica"
@@ -33,7 +29,8 @@ def generateDiagram(app_info, user_info):
 
     with g.subgraph(name='cluster_0', graph_attr={'bgcolor': 'lightcyan4', 'penwidth': '3', 'pencolor': 'navy'}) as c:
         c.attr(color='grey11', fontname=fontname, fontcolor='white')
-        c.attr('node', shape='box', style='filled', color="gold", fontname=fontname, margin=".15")
+        c.attr('node', shape='box', style='filled',
+               color="gold", fontname=fontname, margin=".15")
 
         edges = []
 
@@ -67,7 +64,8 @@ def generateDiagram(app_info, user_info):
                     if minutes == 0:
                         finalDuration = ('%s secs' % (seconds))
                     else:
-                        finalDuration = ('%s mins %s secs' % (minutes, seconds))
+                        finalDuration = ('%s mins %s secs' %
+                                         (minutes, seconds))
                 elif minutes == 0 and hours != 0:
                     finalDuration = f'{hours} hrs {seconds} secs'
                 else:
@@ -103,6 +101,7 @@ def generateDiagram(app_info, user_info):
         c.edge_attr.update(color='red')
         c.edges(edges)
 
-        c.attr(label="User= " + username + " | MAC= " + mac_addy + " | IP= " + ip_addy + " | " + date)
+        c.attr(label="User= " + username + " | MAC= " +
+               mac_addy + " | IP= " + ip_addy + " | " + date)
 
     g.view()

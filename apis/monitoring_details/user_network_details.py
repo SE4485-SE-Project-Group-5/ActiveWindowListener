@@ -10,25 +10,18 @@ import uuid
 
 def get_wifi_info():
     try:
-        if sys.platform in ['Mac', 'darwin', 'os2', 'os2emx']:
-            process = subprocess.Popen(
-                ['/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport', '-I'],
-                stdout=subprocess.PIPE)
-            out, err = process.communicate()
-            process.wait()
-            wifi_info = "".join(map(chr, out))
-            print("Wifi Info: " + str(wifi_info))
-            return wifi_info
-        elif sys.platform in ['Windows', 'win32', 'cygwin']:
+        if sys.platform in ['Windows', 'win32', 'cygwin']:
             return_type = 0  # 0 for return None, 1 for return wifi_info, 2 for return ethernet_info
             wifi_info = os.popen("Netsh WLAN show interfaces").readlines()
-            ethernet_info = os.popen("netsh interface show interface name=\"Ethernet\"").readlines()
+            ethernet_info = os.popen(
+                "netsh interface show interface name=\"Ethernet\"").readlines()
             print("Wifi Info: " + str(wifi_info))
             print("Ethernet Info: " + str(ethernet_info))
             wifi_name = "Cant Find WiFi Name"
             for line in wifi_info:
                 if line.startswith('    State'):
-                    print("Wifi Connection: " + (line.split(": ")[1]).split("\n")[0])
+                    print("Wifi Connection: " +
+                          (line.split(": ")[1]).split("\n")[0])
                     if line.split(": ")[1] == "connected\n":
                         return_type = 1
                 if line.startswith('    SSID'):
@@ -36,7 +29,8 @@ def get_wifi_info():
                     print("Connected to Wifi: " + wifi_name)
             for line in ethernet_info:
                 if line.startswith('   Connect state:'):
-                    print("Ethernet Connection: " + line.split(":        ")[1].split("\n")[0])
+                    print("Ethernet Connection: " +
+                          line.split(":        ")[1].split("\n")[0])
                     if line.split(":        ")[1] == "Connected\n":
                         return_type = 2
             if return_type == 0:

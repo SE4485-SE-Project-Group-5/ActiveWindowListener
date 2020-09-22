@@ -1,10 +1,9 @@
 import json
 from datetime import datetime, timedelta, date, time
 
-import pytz
 from flask import Blueprint
 
-from diagram import generateDiagram
+from apis.diagram import generateDiagram
 from apis.mongo.mongo_analytics import bpt_diagram_info, react_ui_info
 from apis.monitoring_details.user_network_details import get_user_details
 
@@ -51,15 +50,13 @@ def time_from_beginning_of_today(offset: timedelta = None):
     :return: a datetime instance for the indicated time
     """
 
-    # TODO: Find timezone automatically
-    tz = pytz.timezone("America/Chicago")
     # Find timestamp for today's date at 12:00:00 AM
-    midnight_without_tz = datetime.combine(date.today(), time())
-    yesterday_midnight_utc = tz.localize(midnight_without_tz).astimezone(pytz.utc)
+    midnight = datetime.combine(date.today(), time())
+
     # Convert back to offset-naive timestamps for compatibility
-    yesterday_midnight_utc = yesterday_midnight_utc.replace(tzinfo=None)
+    midnight = midnight.replace(tzinfo=None)
     # Account for requested offset
-    return yesterday_midnight_utc + offset if offset is not None else timedelta(seconds=0)
+    return midnight + offset if offset is not None else timedelta(seconds=0)
 
 
 def get_data_for_ui():
@@ -68,7 +65,8 @@ def get_data_for_ui():
     :return: a dict of necessary process information
     """
 
-    start = time_from_beginning_of_today(offset=timedelta(hours=1))  # 1:00AM # FIXME: App will not show activity unless in these bounds for some reason.
+    # 1:00AM # FIXME: App will not show activity unless in these bounds for some reason.
+    start = time_from_beginning_of_today(offset=timedelta(hours=1))
     end = time_from_beginning_of_today(offset=timedelta(hours=24))  # 11:59PM
     # Call analytics between 6am-11:59pm with active/idle/thinking timeouts
     ui_data = react_ui_info(start, end, 5, 15, 60)
@@ -83,7 +81,8 @@ def get_analysis():
     :return: a dict of a process activity schedule
     """
 
-    start = time_from_beginning_of_today(offset=timedelta(hours=1))  # 1:00AM # FIXME
+    start = time_from_beginning_of_today(
+        offset=timedelta(hours=1))  # 1:00AM # FIXME
     end = time_from_beginning_of_today(offset=timedelta(hours=24))  # 11:59PM
     # Call analytics between 6am-11:59pm with active/idle/thinking timeouts
     return bpt_diagram_info(start, end, 5, 15, 60)

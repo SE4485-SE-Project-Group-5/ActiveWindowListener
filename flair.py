@@ -4,6 +4,7 @@ from http.client import HTTPConnection
 from threading import Thread
 
 import webview
+
 from apis.input_methods.mouse_and_keyboard_listener import start_listeners
 from app import run_app
 
@@ -36,7 +37,8 @@ def is_server_running(url, max_wait):
                 return False
             time.sleep(0.1)
             connection = HTTPConnection(url, port)
-            request, response = connection.request("GET", "/"), connection.getresponse()
+            request, response = connection.request(
+                "GET", "/"), connection.getresponse()
             if response is not None:
                 status = response.status
                 return True
@@ -64,7 +66,8 @@ def main():
         # webbrowser.open(link, new=2)
         # while server_thread.is_alive():
         #     time.sleep(0.1)
-        window = webview.create_window("Flair App", link, width=1000, height=522)
+        window = webview.create_window(
+            "Flair App", link, width=1000, height=522)
         # If you want to inspect element just go to localhost url in browser
         webview.start(get_user_agent, window, debug=True)
     else:

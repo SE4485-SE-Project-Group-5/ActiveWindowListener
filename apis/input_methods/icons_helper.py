@@ -1,4 +1,5 @@
 import glob
+import hashlib
 import os
 import pathlib
 import platform
@@ -9,7 +10,8 @@ import win32api
 import win32con
 import win32gui
 import win32ui
-import hashlib
+
+from config import BUNDLE_DIR
 
 
 def save_icon(icon_path, save_path):
@@ -26,7 +28,7 @@ def save_icon(icon_path, save_path):
 
         hdc = win32ui.CreateDCFromHandle(win32gui.GetDC(0))
         hbmp = win32ui.CreateBitmap()
-        hbmp.CreateCompatibleBitmap(hdc, iconX, iconX)
+        hbmp.CreateCompatibleBitmap(hdc, iconX, iconY)
         hdc = hdc.CreateCompatibleDC()
 
         hdc.SelectObject(hbmp)
@@ -46,9 +48,7 @@ def save_icon(icon_path, save_path):
         if extrema[1] < 250:
             img.save(save_path)
         return True
-    except Exception as e:
-        # print("Error:")
-        # print(e)
+    except Exception:
         return False
 
 
@@ -62,25 +62,23 @@ def find_and_save_all_icons(file_path='icons'):
             encoded_file_path = str(hashlib.md5(filename.encode()).hexdigest())
             save_path = f'{file_path}/{encoded_file_path}.png'
             result = save_icon(filename, save_path)
-            print('Saved ' if result else 'Error on ' + parse_exe_name(filename))
-            print(f'\tpath: {save_path}\n\tfilename: {filename}')
+            # print('Saved ' if result else 'Error on ' + parse_exe_name(filename))
+            # print(f'\tpath: {save_path}\n\tfilename: {filename}')
 
     search_path("C:\\Program Files\\")
     search_path("C:\\Program Files (x86)\\")
     end_time = time.time()
-    print("--- %s seconds for finding and saving all icons ---" % (end_time - start_time))
+    print("--- %s seconds for finding and saving all icons ---" %
+          (end_time - start_time))
 
 
 def find_icon_from_path(path, icons_folder=""):
     path = str(hashlib.md5(path.encode()).hexdigest())
     operating_system = str(platform.system()).lower()
-    if getattr(sys, 'frozen', False):
-        if "window" in operating_system:
-            static_folder = os.path.join(sys._MEIPASS, 'static', 'icons')
-            icons_folder = static_folder
-    else:
-        # os.path.join(pathlib.Path(__file__).parent.absolute(), 'icons')
-        icons_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'static', 'icons'))
+
+    # os.path.join(pathlib.Path(__file__).parent.absolute(), 'icons')
+    icons_folder = os.path.abspath(
+        os.path.join(BUNDLE_DIR, 'static', 'icons'))
     for file in os.listdir(icons_folder):
         if file == path + ".png":
             return file
@@ -90,8 +88,3 @@ def find_icon_from_path(path, icons_folder=""):
 def parse_exe_name(exe_name):
     exe_split = exe_name.split("\\")
     return exe_split[2] + " " + exe_split[-1].split(".exe")[0]
-
-
-if __name__ == '__main__':
-    find_and_save_all_icons(file_path=os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'static', 'icons')))
-    print(find_icon_from_path("C:\Program Files\JetBrains\PyCharm Community Edition 2020.1\\bin\pycharm64.exe"))
