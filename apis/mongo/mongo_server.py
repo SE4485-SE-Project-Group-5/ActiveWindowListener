@@ -5,7 +5,9 @@ import platform
 import subprocess
 import sys
 
-MONGO = str(pathlib.Path(os.getcwd()).absolute().joinpath('mongo'))
+from config import BUNDLE_DIR
+
+MONGO = str(pathlib.Path(BUNDLE_DIR).absolute().joinpath('mongo'))
 if not os.path.exists(MONGO):
     os.makedirs(MONGO)
 

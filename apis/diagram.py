@@ -2,17 +2,19 @@ import datetime
 import os
 import platform
 import sys
+from datetime import timedelta
 
 from graphviz import Digraph
-from datetime import timedelta
+
+from config import BUNDLE_DIR
 
 
 def generateDiagram(app_info, user_info):
     directory = None
     homepath = None
 
-    directory = os.path.abspath(os.path.join(os.getcwd(), 'static'))
-    homepath = os.path.abspath(os.path.join(os.getcwd(), 'static', 'icons'))
+    directory = os.path.abspath(os.path.join(BUNDLE_DIR, 'static'))
+    homepath = os.path.abspath(os.path.join(BUNDLE_DIR, 'static', 'icons'))
     g = Digraph('G', filename='business_process_diagram', directory=directory)
     g.attr(rankdir='TB', size='8,5')
     fontname = "Helvetica"

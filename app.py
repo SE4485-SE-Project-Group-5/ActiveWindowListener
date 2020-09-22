@@ -16,6 +16,8 @@ from apis.input_methods.mouse_and_keyboard_listener import start_listeners
 from flask_blueprints.example_bp import example_bp, example_ws
 from flask_blueprints.webview_bp import webview_bp
 
+from config import BUNDLE_DIR
+
 OS = str(platform.system()).lower()
 SIGKILL = 9
 
@@ -65,8 +67,7 @@ def kill_port(port):
 
 
 def run_app(url, port):
-    find_and_save_all_icons("static/icons")
-    shutil.copy("default.png", "static/icons")
+    find_and_save_all_icons(os.path.join(BUNDLE_DIR, "static/icons"))
 
     server = pywsgi.WSGIServer(
         (url, port), app, handler_class=WebSocketHandler)
