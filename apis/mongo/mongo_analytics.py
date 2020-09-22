@@ -27,15 +27,18 @@ def read_events(start: datetime, end: datetime):
 
     events = []
     # Get events for start date, where time needs to be considered
-    events += get_collection(EVENT_DATABASE_NAME, str(start.date())).find({'timestamp': {'$gte': start}})
+    events += get_collection(EVENT_DATABASE_NAME, str(start.date())
+                             ).find({'timestamp': {'$gte': start}})
     # Get events for all intermediate dates
     start += timedelta(days=1)
     while start.date() < end.date():
         # print(start.date())
-        events += get_collection(EVENT_DATABASE_NAME, str(start.date())).find({})
+        events += get_collection(EVENT_DATABASE_NAME,
+                                 str(start.date())).find({})
         start += timedelta(days=1)
     # Get events for end date, where time needs to be considered
-    events += get_collection(EVENT_DATABASE_NAME, str(start.date())).find({'timestamp': {'$lte': end}})
+    events += get_collection(EVENT_DATABASE_NAME,
+                             str(start.date())).find({'timestamp': {'$lte': end}})
 
     return events
 
@@ -58,15 +61,18 @@ def read_processes(start: datetime, end: datetime):
 
     processes = []
     # Get processes for start date, where time needs to be considered
-    processes += get_collection(WINDOWS_DATABASE_NAME, str(start.date())).find({'timestamp': {'$gte': start}})
+    processes += get_collection(WINDOWS_DATABASE_NAME,
+                                str(start.date())).find({'timestamp': {'$gte': start}})
     # Get processes for all intermediate dates
     start += timedelta(days=1)
     while start.date() < end.date():
         # print(start.date())
-        processes += get_collection(WINDOWS_DATABASE_NAME, str(start.date())).find({})
+        processes += get_collection(WINDOWS_DATABASE_NAME,
+                                    str(start.date())).find({})
         start += timedelta(days=1)
     # Get processes for end date, where time needs to be considered
-    processes += get_collection(WINDOWS_DATABASE_NAME, str(start.date())).find({'timestamp': {'$lte': end}})
+    processes += get_collection(WINDOWS_DATABASE_NAME,
+                                str(start.date())).find({'timestamp': {'$lte': end}})
 
     return processes
 
@@ -83,11 +89,13 @@ def bpt_diagram_info(start: datetime, end: datetime, active_buf: int, idle_buf: 
     :return: a dict of the processes in a schedule with their corresponding information
     """
 
-    intervals = business_process_info(start, end, active_buf, idle_buf, think_buf)
+    intervals = business_process_info(
+        start, end, active_buf, idle_buf, think_buf)
     # generate "activities" list
     activities = []
     for process in intervals.as_dict().keys():
-        activities += [(time, process) for time in intervals[process].open_times]
+        activities += [(time, process)
+                       for time in intervals[process].open_times]
 
     # create schedule
     schedule = schedule_activities(activities)
@@ -123,7 +131,8 @@ def react_ui_info(start: datetime, end: datetime, active_buf: int, idle_buf: int
     :return: a dict with each process name and its associated information to display
     """
 
-    intervals = business_process_info(start, end, active_buf, idle_buf, think_buf)
+    intervals = business_process_info(
+        start, end, active_buf, idle_buf, think_buf)
     # compile results of analysis into simple time totals and percentages
     totals = {
         process: {
@@ -154,9 +163,11 @@ def business_process_info(start: datetime, end: datetime, active_buf: int, idle_
     # Tells us what the active process/window is, sorted by timestamp
     user_events = sorted(read_events(start, end), key=lambda e: e['timestamp'])
     # Tells us what all processes/windows are, sorted by timestamp
-    window_log = sorted(read_processes(start, end), key=lambda e: e['timestamp'])
+    window_log = sorted(read_processes(start, end),
+                        key=lambda e: e['timestamp'])
     # dict to keep track of information associated with each process
-    intervals = DefaultDict(lambda: ApplicationTimeLog(active_buf, idle_buf, think_buf))
+    intervals = DefaultDict(lambda: ApplicationTimeLog(
+        active_buf, idle_buf, think_buf))
 
     # Iterate through events in order of timestamps
     user_event_index, window_log_index = 0, 0
@@ -172,7 +183,8 @@ def business_process_info(start: datetime, end: datetime, active_buf: int, idle_
         else:
             # Convenience variables
             curr_log = window_log[window_log_index]
-            pids = [key for key in curr_log.keys() if key not in ['_id', 'timestamp']]
+            pids = [key for key in curr_log.keys() if key not in [
+                '_id', 'timestamp']]
             open_apps = [curr_log[pid]['process_obj']['name'] for pid in pids]
 
             # App is open. track it as such
@@ -182,7 +194,8 @@ def business_process_info(start: datetime, end: datetime, active_buf: int, idle_
             # Update icons
             for pid in pids:
                 app_name = curr_log[pid]['process_obj']['name']
-                intervals[app_name].icon = find_icon_from_path(curr_log[pid]['process_obj']['exe'])
+                intervals[app_name].icon = find_icon_from_path(
+                    curr_log[pid]['process_obj']['exe'])
 
             # Among all tracked apps, update closed apps
             for app in intervals.as_dict():
@@ -205,7 +218,8 @@ def business_process_info(start: datetime, end: datetime, active_buf: int, idle_
     while window_log_index < len(window_log):
         # Convenience variables
         curr_log = window_log[window_log_index]
-        pids = [key for key in curr_log.keys() if key not in ['_id', 'timestamp']]
+        pids = [key for key in curr_log.keys() if key not in [
+            '_id', 'timestamp']]
         open_apps = [curr_log[pid]['process_obj']['name'] for pid in pids]
 
         # App is open. track it as such
@@ -215,7 +229,8 @@ def business_process_info(start: datetime, end: datetime, active_buf: int, idle_
         # Update icons
         for pid in pids:
             app_name = curr_log[pid]['process_obj']['name']
-            intervals[app_name].icon = find_icon_from_path(curr_log[pid]['process_obj']['exe'])
+            intervals[app_name].icon = find_icon_from_path(
+                curr_log[pid]['process_obj']['exe'])
 
         # Among all tracked apps, update closed apps
         for app in intervals.as_dict():

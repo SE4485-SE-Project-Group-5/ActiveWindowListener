@@ -66,7 +66,8 @@ def find_and_save_all_icons(file_path='icons'):
     search_path("C:\\Program Files\\")
     search_path("C:\\Program Files (x86)\\")
     end_time = time.time()
-    print("--- %s seconds for finding and saving all icons ---" % (end_time - start_time))
+    print("--- %s seconds for finding and saving all icons ---" %
+          (end_time - start_time))
 
 
 def find_icon_from_path(path, icons_folder=""):
@@ -74,7 +75,8 @@ def find_icon_from_path(path, icons_folder=""):
     operating_system = str(platform.system()).lower()
 
     # os.path.join(pathlib.Path(__file__).parent.absolute(), 'icons')
-    icons_folder = os.path.abspath(os.path.join(os.getcwd(), 'static', 'icons'))
+    icons_folder = os.path.abspath(
+        os.path.join(os.getcwd(), 'static', 'icons'))
     for file in os.listdir(icons_folder):
         if file == path + ".png":
             return file
@@ -87,5 +89,7 @@ def parse_exe_name(exe_name):
 
 
 if __name__ == '__main__':
-    find_and_save_all_icons(file_path=os.path.abspath(os.path.join(os.getcwd(), 'static', 'icons')))
-    print(find_icon_from_path("C:\Program Files\JetBrains\PyCharm Community Edition 2020.1\\bin\pycharm64.exe"))
+    find_and_save_all_icons(file_path=os.path.abspath(
+        os.path.join(os.getcwd(), 'static', 'icons')))
+    print(find_icon_from_path(
+        "C:\Program Files\JetBrains\PyCharm Community Edition 2020.1\\bin\pycharm64.exe"))

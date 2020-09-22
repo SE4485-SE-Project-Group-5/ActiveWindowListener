@@ -24,7 +24,8 @@ def open_client(port=27017, timeout=30000):
     # If client was not already made
     if not _client_connection:
         # Attempt a client connection
-        _client_connection = client = pymongo.MongoClient('localhost', port, serverSelectionTimeoutMS=timeout)
+        _client_connection = client = pymongo.MongoClient(
+            'localhost', port, serverSelectionTimeoutMS=timeout)
 
         try:
             # Causes this thread to block until client has connected or not
@@ -72,7 +73,8 @@ def log_event(event: dict):
     if 'timestamp' not in event:
         event['timestamp'] = datetime.datetime.utcnow()
     if isinstance(event['timestamp'], str):
-        event['timestamp'] = datetime.datetime.fromisoformat(event['timestamp'])
+        event['timestamp'] = datetime.datetime.fromisoformat(
+            event['timestamp'])
 
     # Get handle on collection for the day
     date = str(event['timestamp'].date())
@@ -105,7 +107,8 @@ def log_processes(processes: dict):
     if 'timestamp' not in processes:
         processes['timestamp'] = datetime.datetime.utcnow()
     if isinstance(processes['timestamp'], str):
-        processes['timestamp'] = datetime.datetime.fromisoformat(processes['timestamp'])
+        processes['timestamp'] = datetime.datetime.fromisoformat(
+            processes['timestamp'])
 
     # Get handle on collection for the day
     date = str(processes['timestamp'].date())
@@ -142,7 +145,7 @@ if __name__ == '__main__':
         log_processes({
             str(pid): {
                 'process_obj': {'pid': pid, 'name': 'UnnamedProcess64.exe',
-                            'exe': '/path/to/exe/UnnamedProcess64.exe', 'username': 'Current User'},
+                                'exe': '/path/to/exe/UnnamedProcess64.exe', 'username': 'Current User'},
                 'windows': [{'hwnd': hwnd, 'title': 'Process Window Title'}]
             }
         })

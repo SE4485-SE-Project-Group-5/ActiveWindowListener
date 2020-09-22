@@ -27,7 +27,8 @@ def generateDiagram(app_info, user_info):
 
     with g.subgraph(name='cluster_0', graph_attr={'bgcolor': 'lightcyan4', 'penwidth': '3', 'pencolor': 'navy'}) as c:
         c.attr(color='grey11', fontname=fontname, fontcolor='white')
-        c.attr('node', shape='box', style='filled', color="gold", fontname=fontname, margin=".15")
+        c.attr('node', shape='box', style='filled',
+               color="gold", fontname=fontname, margin=".15")
 
         edges = []
 
@@ -61,7 +62,8 @@ def generateDiagram(app_info, user_info):
                     if minutes == 0:
                         finalDuration = ('%s secs' % (seconds))
                     else:
-                        finalDuration = ('%s mins %s secs' % (minutes, seconds))
+                        finalDuration = ('%s mins %s secs' %
+                                         (minutes, seconds))
                 elif minutes == 0 and hours != 0:
                     finalDuration = f'{hours} hrs {seconds} secs'
                 else:
@@ -97,6 +99,7 @@ def generateDiagram(app_info, user_info):
         c.edge_attr.update(color='red')
         c.edges(edges)
 
-        c.attr(label="User= " + username + " | MAC= " + mac_addy + " | IP= " + ip_addy + " | " + date)
+        c.attr(label="User= " + username + " | MAC= " +
+               mac_addy + " | IP= " + ip_addy + " | " + date)
 
     g.view()

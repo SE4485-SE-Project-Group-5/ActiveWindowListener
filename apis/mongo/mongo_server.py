@@ -13,9 +13,11 @@ if not os.path.exists(MONGO):
 _windows = sys.platform in ['Windows', 'win32', 'cygwin']
 # Find location of MongoDB daemon process
 try:
-    _daemon_path = subprocess.check_output(['where' if _windows else 'which', 'mongod']).decode().strip()
+    _daemon_path = subprocess.check_output(
+        ['where' if _windows else 'which', 'mongod']).decode().strip()
 except subprocess.CalledProcessError as err:
-    ctypes.windll.user32.MessageBoxW(0, u'Error: MongoDB installation not found.', u'Business Process Automation', 0)
+    ctypes.windll.user32.MessageBoxW(
+        0, u'Error: MongoDB installation not found.', u'Business Process Automation', 0)
     sys.exit(1)
 
 # Define location of configuration file within this folder

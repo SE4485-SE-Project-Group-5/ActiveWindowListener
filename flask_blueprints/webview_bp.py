@@ -18,6 +18,7 @@ def start_dialog(option):
     elif option == "folder":
         choice = webview.FOLDER_DIALOG
     file_types = ['All files (*.*)']
-    result = webview.windows[0].create_file_dialog(choice, allow_multiple=True, file_types=file_types)
+    result = webview.windows[0].create_file_dialog(
+        choice, allow_multiple=True, file_types=file_types)
     result = json.dumps(result, default=str)
     return result  # if result is null this means nothing was chosen and dialog was cancelled

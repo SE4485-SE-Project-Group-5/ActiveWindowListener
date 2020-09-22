@@ -138,15 +138,19 @@ class ApplicationTimeLog:
 
         # Close cases where arrays are empty
         if len(self.active_times) == 0:
-            self.active_times.append([self.open_times[-1][0], self.open_times[-1][0]])
+            self.active_times.append(
+                [self.open_times[-1][0], self.open_times[-1][0]])
         if len(self.idle_times) == 0:
-            self.idle_times.append([self.open_times[-1][0], self.open_times[-1][0]])
+            self.idle_times.append(
+                [self.open_times[-1][0], self.open_times[-1][0]])
         if len(self.thinking_times) == 0:
-            self.thinking_times.append([self.open_times[-1][0], self.open_times[-1][0]])
+            self.thinking_times.append(
+                [self.open_times[-1][0], self.open_times[-1][0]])
 
         # Terminate open status if necessary
         if self.open_times[-1][1] is None:
-            self.open_times[-1][1] = max(self.active_times[-1][1], self.idle_times[-1][1], self.thinking_times[-1][1])
+            self.open_times[-1][1] = max(self.active_times[-1][1],
+                                         self.idle_times[-1][1], self.thinking_times[-1][1])
 
         # Calculate total amounts of time among categories by summing intervals
         # self.final_stats['active_time'] = sum([t2 - t1 for t1, t2 in self.active_times], timedelta()).total_seconds()

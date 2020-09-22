@@ -26,9 +26,11 @@ def active_window_process():
         # Get thread of active window and pid of process responsible for active window
         tid, pid = win32process.GetWindowThreadProcessId(hwnd)
         # Generate process object for the found pid
-        proc = psutil.Process(pid).as_dict(attrs=['pid', 'name', 'exe', 'username'])
+        proc = psutil.Process(pid).as_dict(
+            attrs=['pid', 'name', 'exe', 'username'])
         # Create a dictionary for the information found
-        active = {'process_obj': proc, 'window': {'hwnd': hwnd, 'title': win32gui.GetWindowText(hwnd)}}
+        active = {'process_obj': proc, 'window': {
+            'hwnd': hwnd, 'title': win32gui.GetWindowText(hwnd)}}
         return active
 
     except Exception as e:
@@ -89,13 +91,15 @@ def all_open_windows(with_title=True, blacklist: list or set = None, whitelist: 
     # Add additional blacklisted processes/directories if defined
     exe_blacklist = {'C:\\Windows', 'C:\\Program Files\\WindowsApps'}
     if blacklist:
-        blacklist = set(blacklist) if isinstance(blacklist, list) else blacklist
+        blacklist = set(blacklist) if isinstance(
+            blacklist, list) else blacklist
         exe_blacklist = set.union(exe_blacklist, blacklist)
 
     # Add additional whitelisted processes/directories if defined
     exe_whitelist = {'C:\\Windows\\explorer.exe'}
     if whitelist:
-        whitelist = set(whitelist) if isinstance(whitelist, list) else whitelist
+        whitelist = set(whitelist) if isinstance(
+            whitelist, list) else whitelist
         exe_whitelist = set.union(exe_whitelist, whitelist)
 
     # Obtain all windows' PIDs, HWNDs, and titles
