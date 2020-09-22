@@ -2114,14 +2114,6 @@ python-versions = "*"
 pycparser = "*"
 
 [[package]]
-name = "pytz"
-version = "2020.1"
-description = "World timezone definitions, modern and historical"
-category = "main"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "pywebview"
 version = "3.3.4"
 description = "Build GUI for your Python program with JavaScript, HTML, and CSS."
@@ -2250,7 +2242,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "bed77b3fca5d96f773e4d9f5201edc219763cf1a020e75367db52dd8c2f6c079"
+content-hash = "9169d7e67cfeb78bfbae6373661f0c9ec8d9a3b097c8958e9c0feafe37dafb97"
 
 [metadata.files]
 altgraph = [
@@ -3176,10 +3168,6 @@ pythonnet = [
     {file = "pythonnet-2.5.1-cp38-cp38-win32.whl", hash = "sha256:71d5af9205a6f872e654b21a4f77fb2385aa9feff8760057c0518dc470f19d6f"},
     {file = "pythonnet-2.5.1-cp38-cp38-win_amd64.whl", hash = "sha256:c1db9edf41489c1227746cf6382bd087e08b494632010a6bead92984f000a4bf"},
     {file = "pythonnet-2.5.1.tar.gz", hash = "sha256:b4e876e0ddb52c7ce187c1abf529ef1e419743af283fde9d5769c798cf4b078f"},
-]
-pytz = [
-    {file = "pytz-2020.1-py2.py3-none-any.whl", hash = "sha256:a494d53b6d39c3c6e44c3bec237336e14305e4f29bbf800b599253057fbb79ed"},
-    {file = "pytz-2020.1.tar.gz", hash = "sha256:c35965d010ce31b23eeb663ed3cc8c906275d6be1a34393a1d73a41febf4a048"},
 ]
 pywebview = [
     {file = "pywebview-3.3.4-py3-none-any.whl", hash = "sha256:2e42559e1d409e7fb162eb8e69691113df5a49c258582251f433098ca9fed669"},

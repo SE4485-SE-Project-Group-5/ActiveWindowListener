@@ -1,7 +1,6 @@
 import json
 from datetime import datetime, timedelta, date, time
 
-import pytz
 from flask import Blueprint
 
 from apis.diagram import generateDiagram
@@ -51,15 +50,13 @@ def time_from_beginning_of_today(offset: timedelta = None):
     :return: a datetime instance for the indicated time
     """
 
-    # TODO: Find timezone automatically
-    tz = pytz.timezone("America/Chicago")
     # Find timestamp for today's date at 12:00:00 AM
-    midnight_without_tz = datetime.combine(date.today(), time())
-    yesterday_midnight_utc = tz.localize(midnight_without_tz).astimezone(pytz.utc)
+    midnight = datetime.combine(date.today(), time())
+
     # Convert back to offset-naive timestamps for compatibility
-    yesterday_midnight_utc = yesterday_midnight_utc.replace(tzinfo=None)
+    midnight = midnight.replace(tzinfo=None)
     # Account for requested offset
-    return yesterday_midnight_utc + offset if offset is not None else timedelta(seconds=0)
+    return midnight + offset if offset is not None else timedelta(seconds=0)
 
 
 def get_data_for_ui():
