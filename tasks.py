@@ -35,7 +35,7 @@ def build(c):
     shutil.copy("default.png", "static/icons")
 
     # Build exe with Pyinstaller
-    c.run("python -O -m PyInstaller -w --clean --add-data \"templates;templates\"  --add-data \"static;static\" --add-data \"mongo;mongo\" -y flair.py")
+    c.run("python -O -m PyInstaller -w --clean --add-data \"templates;templates\" --add-data \"static;static\" --add-data \"mongo;mongo\" -y flair.py")
 
     # Remove .spec file
     os.remove("flair.spec")
