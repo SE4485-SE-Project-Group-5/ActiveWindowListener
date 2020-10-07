@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "ActiveWindowListener"
-#define MyAppVersion "1.200"
+#define MyAppVersion "1.201"
 #define MyAppPublisher "UTD Senior Project 4485 Group 5 - Fall 2020"
 #define MyAppURL "https://github.com/SE4485-SE-Project-Group-5/ActiveWindowListener"
 #define MyAppExeName "flair.exe"
@@ -10,7 +10,7 @@
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{665535D1-786B-4B1A-B5B8-3C97986B0665}
+AppId={{FD1C7702-2F8D-46F1-B6DC-C58C3761F315}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
@@ -20,9 +20,11 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
+LicenseFile=C:\Users\Taylor\Desktop\ActiveWindowListener\LICENSE
+InfoBeforeFile=C:\Users\Taylor\Desktop\ActiveWindowListener\README.md
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputDir=C:\Users\Taylor\Desktop\SetupTest\ListenerSetup
+OutputDir=C:\Users\Taylor\Desktop\Setup
 OutputBaseFilename=listener_setup
 Compression=lzma
 SolidCompression=yes
@@ -35,9 +37,10 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "ActiveWindowListener\dist\flair\flair.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "ActiveWindowListener\dist\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "ActiveWindowListener\build\flair\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\Taylor\Desktop\ActiveWindowListener\dist\flair\flair.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\Taylor\Desktop\ActiveWindowListener\dist\flair\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\Taylor\Desktop\ActiveWindowListener\dist\flair\mongodb-windows-x86_64-4.4.0-signed.msi"; DestDir: "C:\Program Files\MongoDB\"; Flags: ignoreversion
+Source: "C:\Users\Taylor\Desktop\ActiveWindowListener\dist\flair\graphviz-2.38.msi"; DestDir: "C:\Program Files\MongoDB\"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -45,5 +48,6 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
+Filename: "C:\Program Files\MongoDB\mongodb-windows-x86_64-4.4.0-signed.msi"; Description: "GraphViz"; Flags: shellexec
+Filename: "C:\Program Files (x86)\Graphviz2.38\graphviz-2.38.msi"; Description: "MongoDB"; Flags: shellexec
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
-
