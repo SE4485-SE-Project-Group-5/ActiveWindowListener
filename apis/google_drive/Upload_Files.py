@@ -33,22 +33,27 @@ def search(query):
             break
 
 
-folder_name = gma()
-query_str = '(mimeType = \'application/vnd.google-apps.folder\') and (name = \'{0}\')'.format(folder_name)
-file_names = ['mongo.server.log.json']
-mime_types = ['application/json']
-folder_id = search(query_str)
+def upload():
+    folder_name = gma()
+    query_str = '(mimeType = \'application/vnd.google-apps.folder\') and (name = \'{0}\')'.format(folder_name)
+    folder_id = search(query_str)
+    file_names = ['mongo.server.log.json']
+    mime_types = ['application/json']
 
-for file_name, mime_type in zip(file_names, mime_types):
-    file_metadata = {
-        'name': file_name,
-        'parents': [folder_id]
-    }
-media = MediaFileUpload('C:/Users/Taylor/Desktop/ActiveWindowListener/mongo/{0}'.format(file_name),
-                        mimetype=mime_type)
+    for file_name, mime_type in zip(file_names, mime_types):
+        file_metadata = {
+            'name': file_name,
+            'parents': [folder_id]
+        }
 
-service.files().create(
-    body=file_metadata,
-    media_body=media,
-    fields='name'
-).execute()
+    media = MediaFileUpload('C:/Users/Taylor/Desktop/ActiveWindowListener/mongo/{0}'.format(file_name),
+                            mimetype=mime_type)
+
+    return service.files().create(
+        body=file_metadata,
+        media_body=media,
+        fields='name'
+    ).execute()
+
+
+upload()
