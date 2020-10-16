@@ -1,7 +1,13 @@
 from googleapiclient.http import MediaFileUpload
-from Google import Create_Service
+import apis.google_drive.Google as Google
 from getmac import get_mac_address as gma
 import time
+
+# import importlib.util
+# spec = importlib.util.spec_from_file_location("Google", "C:/Users/Taylor/Desktop/ActiveWindowListener/apis"
+#                                                         "/google_drive/Google.py")
+# foo = importlib.util.module_from_spec(spec)
+# spec.loader.exec_module(foo)
 
 CLIENT_SECRET_FILE = 'credentials.json'
 API_NAME = 'drive'
@@ -11,7 +17,8 @@ SCOPE = ['https://www.googleapis.com/auth/drive']
 time_stamp = time.strftime("%H-%M-%S")
 time_stamp = "".join((time_stamp, ".json"))
 
-service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPE)
+# service = foo.Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPE)
+service = Google.Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPE)
 
 
 def search(query):
