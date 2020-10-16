@@ -40,7 +40,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: "lib\flair\flair.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "lib\flair\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "lib\mongodb-windows-x86_64-4.4.0-signed.msi"; DestDir: "C:\Program Files\MongoDB\"; Flags: ignoreversion
-Source: "lib\graphviz-2.38.msi"; DestDir: "C:\Program Files\MongoDB\"; Flags: ignoreversion
+Source: "lib\graphviz-2.38.msi"; DestDir: "C:\Program Files (x86)\Graphviz2.38\"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -48,6 +48,6 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: "C:\Program Files\MongoDB\mongodb-windows-x86_64-4.4.0-signed.msi"; Description: "GraphViz"; Flags: shellexec
-Filename: "C:\Program Files (x86)\Graphviz2.38\graphviz-2.38.msi"; Description: "MongoDB"; Flags: shellexec
+Filename: "C:\Program Files\MongoDB\mongodb-windows-x86_64-4.4.0-signed.msi"; Description: "MongoDB Server"; Flags: shellexec
+Filename: "C:\Program Files (x86)\Graphviz2.38\graphviz-2.38.msi"; Description: "Graphviz"; Flags: shellexec
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
