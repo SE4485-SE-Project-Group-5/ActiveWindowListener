@@ -63,8 +63,8 @@ def build(c):
     copy("default.png", "static/icons")
 
     # Build exe with Pyinstaller
-    c.run("pyi-makespec -w --add-data \"templates;templates\" --add-data \"static;static\" --add-data \"mongo;mongo\" flair.py")
-    c.run("python -O -m PyInstaller --clean --distpath \"lib\" -y flair.py")
+    c.run("pyi-makespec flair.py")
+    c.run("python -O -m PyInstaller --clean --add-data \"templates;templates\" --add-data \"static;static\" --add-data \"mongo;mongo\" --distpath \"lib\" -y flair.py")
 
 
 @task
