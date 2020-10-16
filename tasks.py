@@ -99,5 +99,5 @@ def release(c):
 
     # Upload release with GitHub CLI tool
     c.run(
-        f'gh release create v{version} dist/ActiveWindowListener-{version}-setup.exe -t "Active Window Listener v{version}" -n "" -p -d'
+        f'gh release create v{version} dist/ActiveWindowListener-{version}-setup.exe -t "Active Window Listener v{version}" -n "" -p'
     )
