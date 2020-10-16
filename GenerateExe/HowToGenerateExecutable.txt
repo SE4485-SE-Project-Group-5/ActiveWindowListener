@@ -1,9 +1,0 @@
-1. Download/Install Inno Setup: https://jrsoftware.org/isdl.php#stable
-
-2. Place the entire "ActiveWindowListner" project inside the "GenerateExe" folder, which also includes the setup script.
-
-3. Compile the script, which will create an executable in the "ListenerSetup" Folder.
-
-4. If any changes are made to the project, see https://jrsoftware.org/ishelp/ for Inno Setup documentation.
-
-5. Anytime changes to the project are made, steps 2 & 3 will need to be repeated, with any necessary adjustments made to the setupScript.iss file
