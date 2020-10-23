@@ -7,8 +7,7 @@ client = MongoClient("mongodb+srv://Admin:Pass123word#@cluster0.vh3ty.mongodb.ne
 db = client['WindowListener']
 
 def insert_log():
-    collection = db['json']
-
+    collection = db[gma()]
     with open('C:/Users/Taylor/Desktop/ActiveWindowListener/mongo/mongo_server_log.json') as file:
         file_data = json.load(file)
 
@@ -20,14 +19,12 @@ def insert_log():
         print("else statement")
 
 def create_collection():
-    collection_list = db.list_collection_names()
     collection = gma()
+    collection_list = db.list_collection_names()
     if collection in collection_list:
         print("Collection {} already exists!".format(collection))
     else:
         db.create_collection(collection)
         print("Collection: {} was created successfully!".format(collection))
 
-
-create_collection()   
 client.close()
