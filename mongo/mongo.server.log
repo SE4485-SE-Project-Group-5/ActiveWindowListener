@@ -69,3 +69,24 @@
 {"t":{"$date":"2020-10-16T12:10:29.846-05:00"},"s":"I",  "c":"FTDC",     "id":20625,   "ctx":"initandlisten","msg":"Initializing full-time diagnostic data capture","attr":{"dataDirectory":"C:/Users/Taylor/Desktop/ActiveWindowListener/mongo/db/diagnostic.data"}}
 {"t":{"$date":"2020-10-16T12:10:29.848-05:00"},"s":"I",  "c":"NETWORK",  "id":23015,   "ctx":"listener","msg":"Listening on","attr":{"address":"127.0.0.1"}}
 {"t":{"$date":"2020-10-16T12:10:29.848-05:00"},"s":"I",  "c":"NETWORK",  "id":23016,   "ctx":"listener","msg":"Waiting for connections","attr":{"port":27017,"ssl":"off"}}
+{"t":{"$date":"2020-10-22T23:07:22.383-05:00"},"s":"I",  "c":"CONTROL",  "id":23373,   "ctx":"thread1","msg":"CTRL_CLOSE_EVENT signal"}
+{"t":{"$date":"2020-10-22T23:07:22.384-05:00"},"s":"I",  "c":"CONTROL",  "id":23371,   "ctx":"consoleTerminate","msg":"Received event, will terminate after current command ends","attr":{"controlCode":"CTRL_CLOSE_EVENT"}}
+{"t":{"$date":"2020-10-22T23:07:22.385-05:00"},"s":"I",  "c":"NETWORK",  "id":20562,   "ctx":"consoleTerminate","msg":"Shutdown: going to close listening sockets"}
+{"t":{"$date":"2020-10-22T23:07:22.389-05:00"},"s":"I",  "c":"-",        "id":20520,   "ctx":"consoleTerminate","msg":"Stopping further Flow Control ticket acquisitions."}
+{"t":{"$date":"2020-10-22T23:07:22.389-05:00"},"s":"I",  "c":"-",        "id":4695300, "ctx":"consoleTerminate","msg":"Interrupted all currently running operations","attr":{"opsKilled":3}}
+{"t":{"$date":"2020-10-22T23:07:22.390-05:00"},"s":"I",  "c":"CONTROL",  "id":20609,   "ctx":"consoleTerminate","msg":"Shutting down free monitoring"}
+{"t":{"$date":"2020-10-22T23:07:22.390-05:00"},"s":"I",  "c":"FTDC",     "id":20626,   "ctx":"consoleTerminate","msg":"Shutting down full-time diagnostic data capture"}
+{"t":{"$date":"2020-10-22T23:07:22.407-05:00"},"s":"I",  "c":"STORAGE",  "id":20282,   "ctx":"consoleTerminate","msg":"Deregistering all the collections"}
+{"t":{"$date":"2020-10-22T23:07:22.407-05:00"},"s":"I",  "c":"STORAGE",  "id":22261,   "ctx":"consoleTerminate","msg":"Timestamp monitor shutting down"}
+{"t":{"$date":"2020-10-22T23:07:22.408-05:00"},"s":"I",  "c":"STORAGE",  "id":22317,   "ctx":"consoleTerminate","msg":"WiredTigerKVEngine shutting down"}
+{"t":{"$date":"2020-10-22T23:07:22.408-05:00"},"s":"I",  "c":"STORAGE",  "id":22318,   "ctx":"consoleTerminate","msg":"Shutting down session sweeper thread"}
+{"t":{"$date":"2020-10-22T23:07:22.408-05:00"},"s":"I",  "c":"STORAGE",  "id":22319,   "ctx":"consoleTerminate","msg":"Finished shutting down session sweeper thread"}
+{"t":{"$date":"2020-10-22T23:07:22.408-05:00"},"s":"I",  "c":"STORAGE",  "id":22320,   "ctx":"consoleTerminate","msg":"Shutting down journal flusher thread"}
+{"t":{"$date":"2020-10-22T23:07:22.408-05:00"},"s":"I",  "c":"STORAGE",  "id":22321,   "ctx":"consoleTerminate","msg":"Finished shutting down journal flusher thread"}
+{"t":{"$date":"2020-10-22T23:07:22.408-05:00"},"s":"I",  "c":"STORAGE",  "id":22322,   "ctx":"consoleTerminate","msg":"Shutting down checkpoint thread"}
+{"t":{"$date":"2020-10-22T23:07:22.408-05:00"},"s":"I",  "c":"STORAGE",  "id":22323,   "ctx":"consoleTerminate","msg":"Finished shutting down checkpoint thread"}
+{"t":{"$date":"2020-10-22T23:07:22.409-05:00"},"s":"I",  "c":"STORAGE",  "id":4795902, "ctx":"consoleTerminate","msg":"Closing WiredTiger","attr":{"closeConfig":"leak_memory=true,"}}
+{"t":{"$date":"2020-10-22T23:07:22.512-05:00"},"s":"I",  "c":"STORAGE",  "id":4795901, "ctx":"consoleTerminate","msg":"WiredTiger closed","attr":{"durationMillis":103}}
+{"t":{"$date":"2020-10-22T23:07:22.512-05:00"},"s":"I",  "c":"STORAGE",  "id":22281,   "ctx":"consoleTerminate","msg":"shutdown: removing fs lock..."}
+{"t":{"$date":"2020-10-22T23:07:22.512-05:00"},"s":"I",  "c":"CONTROL",  "id":20565,   "ctx":"consoleTerminate","msg":"Now exiting"}
+{"t":{"$date":"2020-10-22T23:07:22.512-05:00"},"s":"I",  "c":"CONTROL",  "id":23138,   "ctx":"consoleTerminate","msg":"Shutting down","attr":{"exitCode":12}}

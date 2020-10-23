@@ -26,6 +26,6 @@ def create_collection():
     else:
         db.create_collection(collection)
         print("Collection: {} was created successfully!".format(collection))
-        
+
 
 client.close()
