@@ -1,7 +1,5 @@
 import datetime
-
 import pymongo
-
 from apis.mongo.mongo_server import start_server, close_server
 
 EVENT_DATABASE_NAME = 'events'
