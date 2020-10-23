@@ -5,42 +5,16 @@ from threading import Thread
 from getmac import get_mac_address as gma
 import requests
 import json
-import apis.google_drive.Google as Google
-import apis.google_drive.Create_Folders as create_folder
-import apis.google_drive.Upload_Files as Upload
-import webview
-
 from apis.input_methods.mouse_and_keyboard_listener import start_listeners
+from apis.mongo_cloud.Mongo_CloudAPI import create_collection
 from app import run_app
+import webview
 
 error = False
 status = False
 port = 43968
 
 operating_system = str(platform.system()).lower()
-
-CLIENT_SECRET_FILE = "C:/Users/Taylor/Desktop/ActiveWindowListener/apis/google_drive/credentials.json"
-API_NAME = 'drive'
-API_VERSION = 'v3'
-SCOPE = ['https://www.googleapis.com/auth/drive']
-folder_name = [gma()]
-query_str = '(mimeType = \'application/vnd.google-apps.folder\') and (name = \'{0}\')'.format(folder_name)
-folder_id = Upload.search(query_str)
-
-service = Google.Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPE)
-
-
-def folder_exists():
-    access_token = 'token'
-    url = 'https://www.googleapis.com/drive/v3/files'
-    headers = {'Authorization': 'Bearer ' + access_token}
-    query = {'q': "id='" + folder_id + "' and mimeType='application/vnd.google-apps.folder'"}
-    response = requests.get(url, headers=headers, params=query)
-    obj = response.json()
-    if obj['files']:
-        return true
-    else:
-        return false
 
 
 def get_user_agent(window):
@@ -77,13 +51,6 @@ def is_server_running(url, max_wait):
 
 def main():
     global port
-
-    if folder_exists():
-        print("Exists")
-    else:
-        create_folder.create_folders()
-        print("DNE")
-
     url, max_wait = 'localhost', 90  # 15 seconds
     link = "http://" + url + ":" + str(port)
     # Starting Server
@@ -91,6 +58,7 @@ def main():
     t.daemon = True
     t.start()
     print("Listeners started")
+    create_collection()
     server_thread = Thread(target=run_app, args=(url, port))
     server_thread.daemon = True
     server_thread.start()
