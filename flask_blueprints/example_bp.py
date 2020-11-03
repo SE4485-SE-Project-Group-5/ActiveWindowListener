@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, date, time
 from flask import Blueprint
 
 from apis.diagram import generateDiagram
+from apis.mongo_cloud.Mongo_CloudAPI import insert_log
 from apis.mongo.mongo_analytics import bpt_diagram_info, react_ui_info
 from apis.monitoring_details.user_network_details import get_user_details
 
@@ -19,16 +20,17 @@ def echo_example(socket):
         if message is None:
             continue
         message = json.loads(message)
-        if message == "GenerateDiagram":
+        if message == "InsertLog":
             try:
-                print("Starting to generate diagram")
+                print("Starting to Insert Log")
                 analysis = get_analysis()
                 user_details = get_user_details()
-                generateDiagram(analysis, user_details)
-                print("Successfully generated diagram")
+                # generateDiagram(analysis, user_details)
+                insert_log()
+                print("Successfully uploaded log")
             except Exception as e:
                 print(e)
-                print("Failed to generate diagram")
+                print("Failed to upload log")
         else:
             # Fetching UI Data
             print("Received", message)
@@ -103,4 +105,5 @@ def get_example(parameter):
 
 
 if __name__ == '__main__':
-    generateDiagram(get_analysis(), get_user_details())
+    # generateDiagram(get_analysis(), get_user_details())
+    insert_log()
