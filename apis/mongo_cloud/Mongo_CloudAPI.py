@@ -8,7 +8,7 @@ db = client['group5db']
 
 def insert_log():
     collection = db[gma()]
-    with open('C:/Users/Taylor/Desktop/ActiveWindowListener/mongo/mongo_server_log.json') as file:
+    with open('C:/Users/Taylor/Desktop/ActiveWindowListener/mongo/mongo_server_log1.json') as file:
         file_data = json.load(file)
 
     if isinstance(file_data, list):
@@ -27,5 +27,5 @@ def create_collection():
         db.create_collection(collection)
         print("Collection: {} was created successfully!".format(collection))
 
-
+insert_log()
 client.close()
