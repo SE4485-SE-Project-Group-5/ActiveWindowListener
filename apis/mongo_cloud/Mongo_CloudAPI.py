@@ -3,7 +3,7 @@ import pymongo
 from pymongo import MongoClient
 from getmac import get_mac_address as gma
 
-client = MongoClient("mongodb+srv://admin:mongodb9143@cluster0.femb8.mongodb.net/group5db?retryWrites=true&w=majority")
+client = MongoClient("mongodb+srv://admin:<password>@cluster0.femb8.mongodb.net/<database>?retryWrites=true&w=majority")
 db = client['group5db']
 
 def insert_log():
