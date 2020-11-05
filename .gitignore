@@ -8,12 +8,29 @@ apis/input_methods/icons
 __pycache__/
 bin/
 out/
+# IDE
 .idea/
 .vscode/
+
+# Bytecode
+__pycache__/
+
+# Icons
+react-ui/public/icons
+apis/input_methods/icons
 static/icons/
 static/business_process_diagram*
 
-# Mongo folder
+# Build
+node_modules/
+*.app
+out/
+build/
+dist/
+lib/
+*.spec
+
+# MongoDB
 mongo/mongo.server.log
 mongo/db/
 
@@ -21,8 +38,5 @@ mongo/db/
 bpd
 bpd.pdf
 
-react-ui/public/icons/
+# Misc
 .DS_Store
-
-# Flair
-flair/

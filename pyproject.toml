@@ -27,6 +27,7 @@ rope = "^0.17.0"
 pyclean = "^2.0.0"
 pyinstaller = "^4.0"
 invoke = "^1.4.1"
+wget = "^3.2"
 
 [build-system]
 requires = ["poetry>=0.12"]
