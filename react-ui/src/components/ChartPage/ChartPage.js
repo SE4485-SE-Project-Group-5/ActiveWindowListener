@@ -180,16 +180,16 @@ class ChartPage extends Component {
               Mac Address: {this.state.network["mac_address"]}
             </div>
           </div>
-          <div className="InsertLog">
+          <div className="GenerateDiagram">
             <Button
               variant="contained"
               color="primary"
               size="large"
               className=""
               startIcon={<SaveIcon />}
-              onClick={() => this.sendMessage("InsertLog")}
+              onClick={() => this.sendMessage("GenerateDiagram")}
             >
-              Insert Log
+              Generate Business Process Flow
             </Button>
           </div>
         </Grid>

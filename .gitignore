@@ -14,7 +14,7 @@ static/icons/
 static/business_process_diagram*
 
 # Mongo folder
-mongo/mongo_server_log.json
+mongo/mongo.server.log
 mongo/db/
 
 # Swimlane BPD Final Files

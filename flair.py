@@ -2,13 +2,11 @@ import platform
 import time
 from http.client import HTTPConnection
 from threading import Thread
-from getmac import get_mac_address as gma
-import requests
-import json
-from apis.input_methods.mouse_and_keyboard_listener import start_listeners
-from apis.mongo_cloud.Mongo_CloudAPI import create_collection
-from app import run_app
+
 import webview
+
+from apis.input_methods.mouse_and_keyboard_listener import start_listeners
+from app import run_app
 
 error = False
 status = False
@@ -51,6 +49,7 @@ def is_server_running(url, max_wait):
 
 def main():
     global port
+
     url, max_wait = 'localhost', 90  # 15 seconds
     link = "http://" + url + ":" + str(port)
     # Starting Server
@@ -58,7 +57,6 @@ def main():
     t.daemon = True
     t.start()
     print("Listeners started")
-    create_collection()
     server_thread = Thread(target=run_app, args=(url, port))
     server_thread.daemon = True
     server_thread.start()
