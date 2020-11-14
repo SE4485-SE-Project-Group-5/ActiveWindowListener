@@ -1,11 +1,16 @@
 import datetime
 import pymongo
+from pymongo import MongoClient
 from apis.mongo.mongo_server import start_server, close_server
+from getmac import get_mac_address as gma
 
 EVENT_DATABASE_NAME = 'events'
 WINDOWS_DATABASE_NAME = 'windows'
 _client_connection = None
 
+cloud_client = MongoClient("mongodb+srv://admin:mongodb9143@cluster0.femb8.mongodb.net/group5db?retryWrites=true&w=majority")
+cloud_db_name = cloud_client['group5db']
+cloud_collection = cloud_db_name[gma()]
 
 def open_client(port=27017, timeout=30000):
     """
@@ -78,8 +83,14 @@ def log_event(event: dict):
     date = str(event['timestamp'].date())
     collection_handle = get_collection(EVENT_DATABASE_NAME, date)
 
-    # Insert the event as a document in the collection; return its ID
-    return collection_handle.insert_one(event).inserted_id
+    try:
+        # Insert the event as a document in the collection; return its ID
+        # print("Successfully inserted to both local and cloud DB")
+        return collection_handle.insert_one(event).inserted_id and cloud_collection.insert_one(event).inserted_id
+    except Exception as e:
+        print(e)
+        print("Failed to upload to cloud DB")
+        return collection_handle.insert_one(event).inserted_id
 
 
 def log_processes(processes: dict):

@@ -1,12 +1,13 @@
 import json
-from datetime import datetime, timedelta, date, time
-
+# from datetime import datetime as dt, datetime.timedelta, date, time
+import datetime
 from flask import Blueprint
 
 from apis.diagram import generateDiagram
 # from apis.mongo_cloud.Mongo_CloudAPI import insert_log
 from apis.mongo.mongo_analytics import bpt_diagram_info, react_ui_info
 from apis.monitoring_details.user_network_details import get_user_details
+from apis.mongo.mongo_client import get_collection
 import pymongo
 from pymongo import MongoClient
 from getmac import get_mac_address as gma
@@ -16,20 +17,6 @@ example_ws = Blueprint('example_ws', __name__)
 
 client = MongoClient("mongodb+srv://admin:mongodb9143@cluster0.femb8.mongodb.net/group5db?retryWrites=true&w=majority")
 db = client['group5db']
-
-
-def insert_log():
-    collection = db[gma()]
-    # with open('C:/Users/Taylor/Desktop/ActiveWindowListener/mongo/mongo_server_log1.json') as file:
-    #     file_data = json.load(file)
-    print("Get Analysis: ", get_analysis())
-    print("Get User Info: ", get_user_details())
-    if isinstance(get_analysis(), list):
-        collection.insert_many(get_analysis())
-        print("Successfully inserted log as many files")
-    else:
-        collection.insert_one(get_analysis())
-        print("Successfully inserted log as single file")
 
 
 @example_ws.route("/echo-example")
@@ -46,7 +33,7 @@ def echo_example(socket):
                 analysis = get_analysis()
                 user_details = get_user_details()
                 # generateDiagram(analysis, user_details)
-                insert_log()
+                # log_event(analysis)
                 print("Successfully uploaded log")
             except Exception as e:
                 print(e)
@@ -65,7 +52,7 @@ def echo_example(socket):
             print("Sent", message)
 
 
-def time_from_beginning_of_today(offset: timedelta = None):
+def time_from_beginning_of_today(offset: datetime.timedelta = None):
     """
     Constructs a datetime for the current calendar date with an optional offset
     from 12:00AM.
@@ -73,12 +60,12 @@ def time_from_beginning_of_today(offset: timedelta = None):
     """
 
     # Find timestamp for today's date at 12:00:00 AM
-    midnight = datetime.combine(date.today(), time())
+    midnight = datetime.datetime.combine(datetime.date.today(), datetime.time())
 
     # Convert back to offset-naive timestamps for compatibility
     midnight = midnight.replace(tzinfo=None)
     # Account for requested offset
-    return midnight + offset if offset is not None else timedelta(seconds=0)
+    return midnight + offset if offset is not None else datetime.timedelta(seconds=0)
 
 
 def get_data_for_ui():
@@ -88,8 +75,8 @@ def get_data_for_ui():
     """
 
     # 1:00AM # FIXME: App will not show activity unless in these bounds for some reason.
-    start = time_from_beginning_of_today(offset=timedelta(hours=1))
-    end = time_from_beginning_of_today(offset=timedelta(hours=24))  # 11:59PM
+    start = time_from_beginning_of_today(offset=datetime.timedelta(hours=1))
+    end = time_from_beginning_of_today(offset=datetime.timedelta(hours=24))  # 11:59PM
     # Call analytics between 6am-11:59pm with active/idle/thinking timeouts
     ui_data = react_ui_info(start, end, 5, 15, 60)
     # Call network information
@@ -104,8 +91,8 @@ def get_analysis():
     """
 
     start = time_from_beginning_of_today(
-        offset=timedelta(hours=1))  # 1:00AM # FIXME
-    end = time_from_beginning_of_today(offset=timedelta(hours=24))  # 11:59PM
+        offset=datetime.timedelta(hours=1))  # 1:00AM # FIXME
+    end = time_from_beginning_of_today(offset=datetime.timedelta(hours=24))  # 11:59PM
     # Call analytics between 6am-11:59pm with active/idle/thinking timeouts
     return bpt_diagram_info(start, end, 5, 15, 60)
 
