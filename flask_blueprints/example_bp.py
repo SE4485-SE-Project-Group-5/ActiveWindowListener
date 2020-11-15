@@ -56,7 +56,7 @@ def time_from_beginning_of_today(offset: timedelta = None):
     # Convert back to offset-naive timestamps for compatibility
     midnight = midnight.replace(tzinfo=None)
     # Account for requested offset
-    return midnight + offset if offset is not None else timedelta(seconds=0)
+    return midnight + offset if offset is not None else midnight
 
 
 def get_data_for_ui():
@@ -66,9 +66,8 @@ def get_data_for_ui():
     """
 
     # 1:00AM # FIXME: App will not show activity unless in these bounds for some reason.
-    start = time_from_beginning_of_today(offset=timedelta(hours=1))
+    start = time_from_beginning_of_today()
     end = time_from_beginning_of_today(offset=timedelta(hours=24))  # 11:59PM
-    # Call analytics between 6am-11:59pm with active/idle/thinking timeouts
     ui_data = react_ui_info(start, end, 5, 15, 60)
     # Call network information
     network_data = get_user_details()
@@ -81,10 +80,8 @@ def get_analysis():
     :return: a dict of a process activity schedule
     """
 
-    start = time_from_beginning_of_today(
-        offset=timedelta(hours=1))  # 1:00AM # FIXME
+    start = time_from_beginning_of_today()
     end = time_from_beginning_of_today(offset=timedelta(hours=24))  # 11:59PM
-    # Call analytics between 6am-11:59pm with active/idle/thinking timeouts
     return bpt_diagram_info(start, end, 5, 15, 60)
 
 
