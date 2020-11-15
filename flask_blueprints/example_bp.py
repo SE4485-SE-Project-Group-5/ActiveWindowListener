@@ -4,12 +4,32 @@ from datetime import datetime, timedelta, date, time
 from flask import Blueprint
 
 from apis.diagram import generateDiagram
-from apis.mongo_cloud.Mongo_CloudAPI import insert_log
+# from apis.mongo_cloud.Mongo_CloudAPI import insert_log
 from apis.mongo.mongo_analytics import bpt_diagram_info, react_ui_info
 from apis.monitoring_details.user_network_details import get_user_details
+import pymongo
+from pymongo import MongoClient
+from getmac import get_mac_address as gma
 
 example_bp = Blueprint('example_bp', __name__)
 example_ws = Blueprint('example_ws', __name__)
+
+client = MongoClient("mongodb+srv://admin:mongodb9143@cluster0.femb8.mongodb.net/group5db?retryWrites=true&w=majority")
+db = client['group5db']
+
+
+def insert_log():
+    collection = db[gma()]
+    # with open('C:/Users/Taylor/Desktop/ActiveWindowListener/mongo/mongo_server_log1.json') as file:
+    #     file_data = json.load(file)
+    print("Get Analysis: ", get_analysis())
+    print("Get User Info: ", get_user_details())
+    if isinstance(get_analysis(), list):
+        collection.insert_many(get_analysis())
+        print("Successfully inserted log as many files")
+    else:
+        collection.insert_one(get_analysis())
+        print("Successfully inserted log as single file")
 
 
 @example_ws.route("/echo-example")
@@ -104,6 +124,6 @@ def get_example(parameter):
     return status
 
 
-if __name__ == '__main__':
+
+#sif __name__ == '__main__':
     # generateDiagram(get_analysis(), get_user_details())
-    insert_log()
