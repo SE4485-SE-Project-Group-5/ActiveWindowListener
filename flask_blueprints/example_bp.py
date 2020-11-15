@@ -65,7 +65,6 @@ def get_data_for_ui():
     :return: a dict of necessary process information
     """
 
-    # 1:00AM # FIXME: App will not show activity unless in these bounds for some reason.
     start = time_from_beginning_of_today()
     end = time_from_beginning_of_today(offset=timedelta(hours=24))  # 11:59PM
     ui_data = react_ui_info(start, end, 5, 15, 60)
